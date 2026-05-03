@@ -186,6 +186,31 @@ df = DataFrame(time_const = time_const,
                 MSE13_NN_val = MSE13_NN_val_vec)
 ##
 
-#CSV.write("performance_metrics.csv", df)
+CSV.write("performance_metrics.csv", df)
 
-#############################################################
+# Compute averages
+summary = pd.DataFrame({
+    "model": ["Constant", "Linear", "NN"],
+    "final_loss": [
+        df["loss_const_val"].mean(),
+        df["loss_lin_val"].mean(),
+        df["loss_NN_val"].mean()
+    ],
+    "mse_12": [
+        df["MSE12_const_val"].mean(),
+        df["MSE12_lin_val"].mean(),
+        df["MSE12_NN_val"].mean()
+    ],
+    "mse_13": [
+        df["MSE13_const_val"].mean(),
+        df["MSE13_lin_val"].mean(),
+        df["MSE13_NN_val"].mean()
+    ]
+})
+
+# Save to new CSV
+summary.to_csv("metrics_julia.csv", index=False)
+
+print(summary)
+
+
